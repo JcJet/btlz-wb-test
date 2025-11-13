@@ -4,7 +4,12 @@
  */
 export async function up(knex) {
     return knex.schema.createTable("spreadsheets", (table) => {
-        table.string("spreadsheet_id").primary();
+        table.increments("id").primary();
+        table.string("spreadsheet_id").notNullable();
+        table.string("sheet_name").notNullable().defaultTo("stocks_coefs");
+        table.string("range").defaultTo("A1");
+        table.boolean("active").defaultTo(true);
+        table.timestamp("created_at").defaultTo(knex.fn.now());
     });
 }
 
